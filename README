@@ -24,4 +24,7 @@ Acme::JWT documentation is available as in POD. So you can do:
 
 to read the documentation online with your favorite pager.
 
+JWT specification 
+    http://self-issued.info/docs/draft-jones-json-web-token.html
+
 NAGAYA Shinichiro
