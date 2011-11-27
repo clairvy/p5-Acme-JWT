@@ -140,7 +140,7 @@ __END__
 
 =head1 NAME
 
-Acme::JWT -
+Acme::JWT - JWT utilities.
 
 =head1 SYNOPSIS
 
@@ -148,13 +148,19 @@ Acme::JWT -
 
 =head1 DESCRIPTION
 
-Acme::JWT is
+Acme::JWT is provided JWT method.
+JWT is JSON Web Token
+see http://self-issued.info/docs/draft-jones-json-web-token-06.html
+
+rewrite from ruby version.
 
 =head1 AUTHOR
 
 NAGAYA Shinichiro E<lt>clairvy@gmail.comE<gt>
 
 =head1 SEE ALSO
+
+https://github.com/clairvy/p5-Acme-JWT
 
 =head1 LICENSE
 
