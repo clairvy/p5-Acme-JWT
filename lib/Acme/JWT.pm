@@ -1,7 +1,7 @@
 package Acme::JWT;
 use strict;
 use warnings;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use JSON qw/decode_json encode_json/;
 use MIME::Base64 qw/encode_base64url decode_base64url/;

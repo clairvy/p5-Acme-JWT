@@ -8,3 +8,4 @@ __DATA__
 NAGAYA Shinichiro
 clairvy@gmail.com
 Acme::JWT
+JSON

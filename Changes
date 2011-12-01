@@ -1,4 +1,7 @@
 Revision history for Perl extension Acme::JWT
 
+0.02    Thu Dec 01 16:24:50 2011
+        - append dependency to Test::More::done_testing
+
 0.01    Thu Nov 24 00:35:31 2011
         - original version
