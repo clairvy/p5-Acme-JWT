@@ -81,7 +81,7 @@ my $payload = {foo => 'bar'};
 {
     my $name = 'encodes and decodes plaintext JWTs';
     my $jwt = Acme::JWT->encode($payload, undef, 0);
-    is split(/\./, $jwt), 2, $name . '(length)';
+    is((my @a = split(/\./, $jwt)), 2, $name . '(length)');
     my $decoded_payload = Acme::JWT->decode($jwt, undef, 0);
     is_d $decoded_payload, $payload, $name;
 }
