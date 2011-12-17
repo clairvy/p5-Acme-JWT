@@ -22,10 +22,15 @@ my $payload = {foo => 'bar'};
     is_d $decoded_payload, $payload, $name;
 }
 
+
 {
+    my $algorithm = 'HS512';
+    if ($Acme::JWT::has_sha2) {
+        $algorithm = 'RS256';
+    }
     my $name = 'encodes and decodes JWTs for RSA signaturese';
     my $rsa = Crypt::OpenSSL::RSA->generate_key(512);
-    my $jwt = Acme::JWT->encode($payload, $rsa->get_private_key_string, 'RS256');
+    my $jwt = Acme::JWT->encode($payload, $rsa->get_private_key_string, $algorithm);
     my $decoded_payload = Acme::JWT->decode($jwt, $rsa->get_public_key_string);
     is_d $decoded_payload, $payload, $name;
 }

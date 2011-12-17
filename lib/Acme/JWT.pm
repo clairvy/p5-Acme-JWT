@@ -1,13 +1,21 @@
 package Acme::JWT;
 use strict;
 use warnings;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use JSON qw/decode_json encode_json/;
 use MIME::Base64 qw/encode_base64url decode_base64url/;
 use Try::Tiny;
 use Digest::SHA qw/hmac_sha256 hmac_sha384 hmac_sha512/;
 use Crypt::OpenSSL::RSA;
+
+our $has_sha2;
+BEGIN {
+    $has_sha2 = 0;
+    if (UNIVERSAL::can('Crypt::OpenSSL::RSA', 'use_sha512_hash')) {
+        $has_sha2 = 1;
+    }
+}
 
 sub encode {
     my $self = shift;
@@ -69,10 +77,18 @@ sub decode {
             HS256 => $hmac,
             HS384 => $hmac,
             HS512 => $hmac,
-            RS256 => $verify_method,
-            RS384 => $verify_method,
-            RS512 => $verify_method,
         };
+
+        if ($has_sha2) {
+            $algorithm = {
+                %$algorithm,
+                (
+                    RS256 => $verify_method,
+                    RS384 => $verify_method,
+                    RS512 => $verify_method,
+                ),
+            };
+        }
         if (exists($algorithm->{$algo})) {
             unless ($algorithm->{$algo}->($algo, $key, $signing_input, $signature)) {
                 die 'Signature verifacation failed';
@@ -99,10 +115,17 @@ sub sign {
         HS256 => $hmac,
         HS384 => $hmac,
         HS512 => $hmac,
-        RS256 => $rsa,
-        RS384 => $rsa,
-        RS512 => $rsa,
     };
+    if ($has_sha2) {
+        $algorithm = {
+            %$algorithm,
+            (
+                RS256 => $rsa,
+                RS384 => $rsa,
+                RS512 => $rsa,
+            ),
+        };
+    }
     unless (exists($algorithm->{$algo})) {
         die 'Unsupported signing method';
     }
